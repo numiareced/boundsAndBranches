@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,9 +53,10 @@ public class ATSPParser implements IATSPParser {
 				}
 				temp = br.readLine();
 		    }
+		} catch (IOException e) {
+			System.out.println("File reading error");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Something went wrong");
 		}
 	}
 

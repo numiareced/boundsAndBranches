@@ -9,7 +9,7 @@ public class TSP {
 			System.out.println("Bad args!!!");
 			System.exit(1);
 		}
-		
+
 		try {
 			time = Long.parseLong(args[1]) * 1000;
 		} catch (NumberFormatException e) {
