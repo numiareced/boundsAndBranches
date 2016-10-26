@@ -2,29 +2,37 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * Solves the traveling salesman problem using Branch and Bound by utilizing Node's
+ * Solves the traveling salesman problem using Branch and Bound by utilizing
+ * Node's
  */
 public class Solver {
+	
+	public static boolean flag = false;
+	
 	double[][] distances;
-	//see this best cost? we should use heuristic here instead of this algorithm ! 
-	//and may be we should understand what greedy cost is and change it somehow? 
+	// see this best cost? we should use heuristic here instead of this
+	// algorithm !
+	// and may be we should understand what greedy cost is and change it
+	// somehow?
 	double best_cost;
 	int[] best_path;
 
 	/**
 	 * Constructs a new Solver and initializes distances array
 	 *
-	 * @param cities An ArrayList of City's
+	 * @param cities
+	 *            An ArrayList of City's
 	 */
 	public Solver(ArrayList<City> cities) {
 		distances = new double[cities.size()][cities.size()];
-		for(int i = 0; i < cities.size(); i++) {
-			for(int ii = 0; ii < cities.size(); ii++)
+		for (int i = 0; i < cities.size(); i++) {
+			for (int ii = 0; ii < cities.size(); ii++)
 				distances[i][ii] = cities.get(i).distance(cities.get(ii));
 		}
 	}
+
 	public Solver(double[][] distance) {
-		distances = distance; 
+		distances = distance;
 	}
 
 	/**
@@ -34,13 +42,13 @@ public class Solver {
 	 */
 	public int[] calculate() {
 		HashSet<Integer> location_set = new HashSet<Integer>(distances.length);
-		for(int i = 0; i < distances.length; i++)
+		for (int i = 0; i < distances.length; i++)
 			location_set.add(i);
 
 		best_cost = findGreedyCost(0, location_set, distances);
 
 		int[] active_set = new int[distances.length];
-		for(int i = 0; i < active_set.length; i++)
+		for (int i = 0; i < active_set.length; i++)
 			active_set[i] = i;
 
 		Node root = new Node(null, 0, distances, active_set, 0);
@@ -61,22 +69,25 @@ public class Solver {
 	/**
 	 * Find the greedy cost for a set of locations
 	 *
-	 * @param i The current location
-	 * @param location_set Set of all remaining locations
-	 * @param distances The 2D array containing point distances
+	 * @param i
+	 *            The current location
+	 * @param location_set
+	 *            Set of all remaining locations
+	 * @param distances
+	 *            The 2D array containing point distances
 	 * @return The greedy cost
 	 */
-	private double findGreedyCost(int i, HashSet<Integer> location_set, double[][] distances) {		
-		if(location_set.isEmpty())
+	private double findGreedyCost(int i, HashSet<Integer> location_set, double[][] distances) {
+		if (location_set.isEmpty())
 			return distances[0][i];
 
 		location_set.remove(i);
 
 		double lowest = Double.MAX_VALUE;
 		int closest = 0;
-		for(int location : location_set) {
+		for (int location : location_set) {
 			double cost = distances[i][location];
-			if(cost < lowest) {
+			if (cost < lowest) {
 				lowest = cost;
 				closest = location;
 			}
@@ -88,7 +99,8 @@ public class Solver {
 	/**
 	 * Recursive method to go through the tree finding and pruning paths
 	 *
-	 * @param parent The root/parent node
+	 * @param parent
+	 *            The root/parent node
 	 */
 	private void traverse(Node parent) {
 		if (TSP.timer.getTime() >= TSP.time) {
@@ -96,15 +108,15 @@ public class Solver {
 		}
 		Node[] children = parent.generateChildren();
 
-		for(Node child : children) {
-			if(child.isTerminal()) {
+		for (Node child : children) {
+			if (child.isTerminal()) {
+				flag = true;
 				double cost = child.getPathCost();
-				if(cost < best_cost) {
+				if (cost < best_cost) {
 					best_cost = cost;
 					best_path = child.getPath();
 				}
-			}
-			else if(child.getLowerBound() <= best_cost) {
+			} else if (child.getLowerBound() <= best_cost) {
 				traverse(child);
 			}
 		}
