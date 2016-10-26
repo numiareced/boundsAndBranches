@@ -67,6 +67,9 @@ public class Solver {
 	 * @return The greedy cost
 	 */
 	private double findGreedyCost(int i, HashSet<Integer> location_set, double[][] distances) {
+		if (TSP.timer.getTime() >= TSP.time) {
+			return distances[0][i];
+		}
 		if(location_set.isEmpty())
 			return distances[0][i];
 

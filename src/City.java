@@ -4,6 +4,8 @@ import java.awt.geom.Point2D;
  * City class that represents a city by a point and a name
  */
 public class City extends Point2D.Double {
+
+	private static final long serialVersionUID = 1L;
 	private String name;
 	
 	//looks like we dont need this now, mb remove? 

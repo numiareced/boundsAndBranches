@@ -37,22 +37,22 @@ public class ATSPParser implements IATSPParser {
 			regexp = "^EDGE_WEIGHT_FORMAT:\\s+(.*)$";
 			edgeWeightFormat = find(regexp, temp);
 			
-			int i = 1;
-			int j = 1;
-			costMatrix = new double[dimension + 1][dimension + 1];
+			int i = 0;
+			int j = 0;
+			costMatrix = new double[dimension + 0][dimension + 0];
 			br.readLine();
 			temp = br.readLine();
 			Pattern pattern = Pattern.compile("(\\d+)\\s*");
 			while (temp != null) {
-				if (j >= dimension + 1) {
+				if (j >= dimension + 0) {
 					i++;
-					j = 1;
+					j = 0;
 				}
 				
 				Matcher matcher = pattern.matcher(temp);
 				while (matcher.find()) {
 					int edgeWeight = Integer.parseInt(matcher.group(1));
-					if (i == 1 && j == 1) {
+					if (i == 0 && j == 0) {
 						separator = edgeWeight;
 					}
 					if (edgeWeight == separator) edgeWeight = 0;

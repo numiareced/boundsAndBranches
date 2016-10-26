@@ -1,37 +1,29 @@
-import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 public class TSP {
+	
+	public static Timer timer;
+	public static long time;
+	
 	public static void main(String[] args) {
-		File file;
-		int time = 0; 
-		if(args.length > 0) {
-			file = new File(args[0]);
-			time = Integer.parseInt(args[1]);
-		}
-		else {
-			System.out.print("no file!!!");
-			//try catch? :)
+
+		if (args.length == 2) {
+			time = Long.parseLong(args[1]);
+		} else {
+			System.out.println("Bad args!!!");
+			System.exit(1);
 		}
 		
 		ATSPParser atspParser = new ATSPParser(args[0]);
 		double[][] distances = atspParser.getCostMatrix();
-		Timer timer = new Timer();
+		timer = new Timer();
 		Solver solver = new Solver(distances);
 		timer.start();
 		int[] path = solver.calculate();
 		timer.stop();
 		for (int node: path){
-			System.out.println(node + " + " );
+			System.out.print(node + " -> " );
 		}
+		System.out.println(path[0]);
 		
-		//path is ok, but cost is wrong.. mb we should calculate it manually..
-		System.out.println("best cost is:" + solver.getCost());
+		System.out.println("best cost is: " + solver.getCost());
 	}
 }
