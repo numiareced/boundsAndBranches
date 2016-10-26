@@ -66,10 +66,7 @@ public class Solver {
 	 * @param distances The 2D array containing point distances
 	 * @return The greedy cost
 	 */
-	private double findGreedyCost(int i, HashSet<Integer> location_set, double[][] distances) {
-		if (TSP.timer.getTime() >= TSP.time) {
-			return distances[0][i];
-		}
+	private double findGreedyCost(int i, HashSet<Integer> location_set, double[][] distances) {		
 		if(location_set.isEmpty())
 			return distances[0][i];
 
@@ -94,6 +91,9 @@ public class Solver {
 	 * @param parent The root/parent node
 	 */
 	private void traverse(Node parent) {
+		if (TSP.timer.getTime() >= TSP.time) {
+			return;
+		}
 		Node[] children = parent.generateChildren();
 
 		for(Node child : children) {

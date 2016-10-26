@@ -6,6 +6,6 @@ public interface IATSPParser {
 	public int getDimension();
 	public String getEdgeWeightType();
 	public String getEdgeWeightFormat();
-	public int getEdgeWeight(double row, double col);
+	public double getEdgeWeight(int row, int col);
 	public double[][] getCostMatrix();
 }

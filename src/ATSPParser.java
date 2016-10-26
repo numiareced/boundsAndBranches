@@ -12,9 +12,6 @@ public class ATSPParser implements IATSPParser {
 	private String edgeWeightType;
 	private String edgeWeightFormat;
 	private double[][] costMatrix;
-	//private short[][] costMatrix;
-	
-	private int separator;
 	
 	public ATSPParser(String filename) {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -39,24 +36,18 @@ public class ATSPParser implements IATSPParser {
 			
 			int i = 0;
 			int j = 0;
-			costMatrix = new double[dimension + 0][dimension + 0];
+			costMatrix = new double[dimension][dimension];
 			br.readLine();
 			temp = br.readLine();
 			Pattern pattern = Pattern.compile("(\\d+)\\s*");
 			while (temp != null) {
-				if (j >= dimension + 0) {
-					i++;
-					j = 0;
-				}
-				
 				Matcher matcher = pattern.matcher(temp);
 				while (matcher.find()) {
-					int edgeWeight = Integer.parseInt(matcher.group(1));
-					if (i == 0 && j == 0) {
-						separator = edgeWeight;
+					if (j >= dimension) {
+						i++;
+						j = 0;
 					}
-					if (edgeWeight == separator) edgeWeight = 0;
-					costMatrix[i][j] = (short) edgeWeight;
+					costMatrix[i][j] = Double.parseDouble(matcher.group(1));
 					j++;
 				}
 				temp = br.readLine();
@@ -104,19 +95,13 @@ public class ATSPParser implements IATSPParser {
 		return edgeWeightFormat;
 	}
 
-/*	@Override
-	public int getEdgeWeight(double row, double col) {
+	@Override
+	public double getEdgeWeight(int row, int col) {
 		return costMatrix[row][col];
-	}*/
+	}
 
 	@Override
 	public double[][] getCostMatrix() {
 		return costMatrix;
-	}
-
-	@Override
-	public int getEdgeWeight(double row, double col) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }
