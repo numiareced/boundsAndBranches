@@ -3,10 +3,6 @@ import java.util.HashSet;
 public class Solver {
 
 	double[][] distances;
-	// see this best cost? we should use heuristic here instead of this
-	// algorithm !
-	// and may be we should understand what greedy cost is and change it
-	// somehow?
 	double bestCost;
 	int[] bestPath;
 
@@ -36,11 +32,7 @@ public class Solver {
 	}
 
 	private double findGreedyCost(int i, HashSet<Integer> locationSet, double[][] distances) {
-		if (locationSet.isEmpty())
-			return distances[0][i];
-
 		locationSet.remove(i);
-
 		double lowest = Double.MAX_VALUE;
 		int closest = 0;
 		for (int location : locationSet) {
@@ -50,6 +42,9 @@ public class Solver {
 				closest = location;
 			}
 		}
+		
+		if (locationSet.isEmpty())
+			return distances[i][0];
 
 		return lowest + findGreedyCost(closest, locationSet, distances);
 	}
