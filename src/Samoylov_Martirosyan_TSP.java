@@ -23,18 +23,15 @@ public class Samoylov_Martirosyan_TSP {
 		timer = new Timer();
 		timer.start();
 		int[] path = solver.calculate();
-		
-		double finalCost = solver.getCost();
-		if (finalCost != -1){
+
+		int finalCost = (int) solver.getCost();
+		if (finalCost != -1) {
 			for (int node : path) {
 				System.out.print((node + 1) + " -> ");
 			}
 			System.out.println(path[0] + 1);
-			System.out.println("best cost is:\n " + (int)solver.getCost());
 		}
-		else {
-			System.out.println("best cost is:\n " + (int)finalCost);
-		}
-		
+		System.out.println("best cost is:\n" + finalCost);
+
 	}
 }
