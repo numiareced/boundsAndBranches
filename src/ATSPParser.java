@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ATSPParser implements IATSPParser {
-	
+
 	private String name;
 	private String type;
 	private String comment;
@@ -13,7 +13,7 @@ public class ATSPParser implements IATSPParser {
 	private String edgeWeightType;
 	private String edgeWeightFormat;
 	private double[][] costMatrix;
-	
+
 	public ATSPParser(String filename) {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String temp = br.readLine();
@@ -34,7 +34,7 @@ public class ATSPParser implements IATSPParser {
 			temp = br.readLine();
 			regexp = "^EDGE_WEIGHT_FORMAT:\\s+(.*)$";
 			edgeWeightFormat = find(regexp, temp);
-			
+
 			int i = 0;
 			int j = 0;
 			costMatrix = new double[dimension][dimension];
@@ -52,7 +52,7 @@ public class ATSPParser implements IATSPParser {
 					j++;
 				}
 				temp = br.readLine();
-		    }
+			}
 		} catch (IOException e) {
 			System.out.println("File reading error");
 		} catch (Exception e) {

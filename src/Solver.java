@@ -42,7 +42,7 @@ public class Solver {
 				closest = location;
 			}
 		}
-		
+
 		if (locationSet.isEmpty())
 			return distances[i][0];
 
@@ -50,7 +50,8 @@ public class Solver {
 	}
 
 	private void traverse(Node parent) {
-		if (TSP.timer.getTime() >= TSP.time) {
+		if (Samoylov_Martirosyan_TSP.timer.getTime() >= Samoylov_Martirosyan_TSP.time) {
+			bestCost = -1; 
 			return;
 		}
 		Node[] children = parent.generateChildren();

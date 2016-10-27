@@ -58,15 +58,15 @@ public class Node {
 		if (activeSet.length == 2)
 			return getPathCost() + distances[activeSet[0]][activeSet[1]];
 
-		for (int location : activeSet) {
+		for (int row : activeSet) {
 			double low1 = Double.MAX_VALUE;
 			double low2 = Double.MAX_VALUE;
 
-			for (int other : activeSet) {
-				if (other == location)
+			for (int column : activeSet) {
+				if (column == row)
 					continue;
 
-				double cost = distances[location][other];
+				double cost = distances[row][column];
 				if (cost < low1) {
 					low2 = low1;
 					low1 = cost;

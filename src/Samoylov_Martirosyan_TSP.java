@@ -1,4 +1,4 @@
-public class TSP {
+public class Samoylov_Martirosyan_TSP {
 
 	public static Timer timer;
 	public static long time;
@@ -23,11 +23,18 @@ public class TSP {
 		timer = new Timer();
 		timer.start();
 		int[] path = solver.calculate();
-
-		for (int node : path) {
-			System.out.print((node + 1) + " -> ");
+		
+		double finalCost = solver.getCost();
+		if (finalCost != -1){
+			for (int node : path) {
+				System.out.print((node + 1) + " -> ");
+			}
+			System.out.println(path[0] + 1);
+			System.out.println("best cost is:\n " + (int)solver.getCost());
 		}
-		System.out.println(path[0] + 1);
-		System.out.println("best cost is: " + solver.getCost());
+		else {
+			System.out.println("best cost is:\n " + (int)finalCost);
+		}
+		
 	}
 }
